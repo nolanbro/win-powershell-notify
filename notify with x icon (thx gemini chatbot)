@@ -1,0 +1,26 @@
+# Load the System.Windows.Forms assembly if it's not already loaded
+if (-not ([System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms"))) {
+    Add-Type -AssemblyName System.Windows.Forms
+}
+
+# Define the notification icon
+$BalloonTipIcon = [System.Windows.Forms.ToolTipIcon]::Error
+
+# Create a NotifyIcon object
+$NotifyIcon = New-Object System.Windows.Forms.NotifyIcon
+$NotifyIcon.Icon = [System.Drawing.SystemIcons]::Error
+$NotifyIcon.Visible = $true
+
+# Display the balloon tip
+$NotifyIcon.ShowBalloonTip(
+    5000,             # Timeout (in milliseconds)
+    "Notification",   # Title
+    "hello world",    # Body
+    $BalloonTipIcon  # Icon
+)
+
+# Keep the icon visible for a bit (optional)
+Start-Sleep -Seconds 5
+
+# Clean up the NotifyIcon object
+$NotifyIcon.Dispose()
